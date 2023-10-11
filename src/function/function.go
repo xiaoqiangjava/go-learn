@@ -44,6 +44,16 @@ func main() {
 	fmt.Println(getSum()(2)) // 2
 	fmt.Println(getSum()(3)) // 3
 
+	fmt.Println(a())
+
+}
+
+func a() (success map[string]interface{}) {
+	su := map[string]interface{}{
+		"code": -1,
+		"mesage": "errorMsg",
+	}
+	return su
 }
 
 /**

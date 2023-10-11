@@ -40,4 +40,9 @@ func main() {
 	var slice6 = []int{1, 3, 5, 7}
 	copy(slice5, slice6) // 将slice6中的所有元素拷贝到slice5中
 	fmt.Println(slice5)
+
+	fmt.Println("===================")
+	var slice7 = make([]int, 0, 10)
+	slice7 = append(slice7, 1, 2, 3, 4, 5)
+	fmt.Println(slice7, "len: ", len(slice7))
 }

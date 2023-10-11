@@ -26,7 +26,7 @@ make(chan int) // 不带缓冲区，不带缓冲区的channel在发送发发送�
 channel中的数据必须是成对出现的，有发送，有读取，如果直接收，没有发送或者只发送没有接收，那么所有的goroutine无法运行，程序将会以deadlock结束
 因此在定义channel时，如果定义了只读、只写chan，是没有意义的，程序会以deadlock结束
 channel主要用来协程之间通信，因此发送方和接收方一般都是不同的协程
- */
+*/
 func main() {
 	// 定义
 	//define()
@@ -61,7 +61,7 @@ func channelLock(num *int, lock chan int) {
 	*num++
 	fmt.Println("num = ", *num)
 	// 释放锁
-	<- lock
+	<-lock
 }
 
 // 带缓冲区的channel发送和接收操作在对列没有满时不会阻塞演示
@@ -83,10 +83,10 @@ func bufferSend(buffer chan<- int) {
 
 func bufferReceive(buffer <-chan int) {
 	// 接受数据
-	<- buffer
-	<- buffer
-	<- buffer
-	<- buffer
+	<-buffer
+	<-buffer
+	<-buffer
+	<-buffer
 	fmt.Println("receive end")
 }
 
@@ -100,9 +100,9 @@ func noBufferSend(noBuffer chan int) {
 
 func noBufferReceive(noBuffer chan int) {
 	fmt.Println("wait 1 second before receive")
-	time.Sleep(1 * time.Second)
+	time.Sleep(3 * time.Second)
 	// 从channel中接受数据
-	<- noBuffer // 数据不使用直接丢弃
+	<-noBuffer // 数据不使用直接丢弃
 	fmt.Println("receive success: ", time.Now())
 }
 
@@ -111,7 +111,7 @@ func define() {
 	// 定义只读channel
 	var onlyRead = make(<-chan int)
 	// 如果是只读channel，那么不能写数据，从只读管道中读取数据时，会触发deadlock异常，因此这里的程序无法正常执行
-	fmt.Println("only read channel: ", <- onlyRead)
+	fmt.Println("only read channel: ", <-onlyRead)
 	// 这里会编译报错：send to receive-only type <-chan int
 	//onlyRead <- 20
 	// 定义只写channel
@@ -123,5 +123,5 @@ func define() {
 	var channel = make(chan int)
 	channel <- 20
 	close(channel)
-	fmt.Println("read from channel: ", <- channel)
+	fmt.Println("read from channel: ", <-channel)
 }
